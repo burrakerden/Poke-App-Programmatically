@@ -21,6 +21,9 @@
 		962EEE3629EFE20B00CDC449 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962EEE3529EFE20B00CDC449 /* ViewModel.swift */; };
 		962EEE3829EFE24900CDC449 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962EEE3729EFE24900CDC449 /* DetailViewModel.swift */; };
 		962EEE3A29EFE44100CDC449 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962EEE3929EFE44100CDC449 /* FeedCell.swift */; };
+		962EEE3D29F13B4500CDC449 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 962EEE3C29F13B4500CDC449 /* SDWebImage */; };
+		962EEE4029F13B5A00CDC449 /* SDWebImageSVGCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 962EEE3F29F13B5A00CDC449 /* SDWebImageSVGCoder */; };
+		962EEE4229F13E4800CDC449 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962EEE4129F13E4800CDC449 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,7 @@
 		962EEE3529EFE20B00CDC449 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		962EEE3729EFE24900CDC449 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		962EEE3929EFE44100CDC449 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		962EEE4129F13E4800CDC449 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,8 +49,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				962EEE3D29F13B4500CDC449 /* SDWebImage in Frameworks */,
 				962EEE1E29EFDAF400CDC449 /* SnapKit in Frameworks */,
 				962EEE2C29EFDDDC00CDC449 /* Alamofire in Frameworks */,
+				962EEE4029F13B5A00CDC449 /* SDWebImageSVGCoder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +162,7 @@
 		962EEE3229EFE1B900CDC449 /* DetailVC */ = {
 			isa = PBXGroup;
 			children = (
+				962EEE4129F13E4800CDC449 /* DetailViewController.swift */,
 				962EEE3429EFE1D700CDC449 /* DetialViewModel */,
 			);
 			path = DetailVC;
@@ -196,6 +203,8 @@
 			packageProductDependencies = (
 				962EEE1D29EFDAF400CDC449 /* SnapKit */,
 				962EEE2B29EFDDDC00CDC449 /* Alamofire */,
+				962EEE3C29F13B4500CDC449 /* SDWebImage */,
+				962EEE3F29F13B5A00CDC449 /* SDWebImageSVGCoder */,
 			);
 			productName = "Poke-App-Programmatically";
 			productReference = 962EEE0329EF1BB800CDC449 /* Poke-App-Programmatically.app */;
@@ -228,6 +237,8 @@
 			packageReferences = (
 				962EEE1C29EFDAF400CDC449 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				962EEE2A29EFDDDC00CDC449 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				962EEE3B29F13B4500CDC449 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				962EEE3E29F13B5A00CDC449 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */,
 			);
 			productRefGroup = 962EEE0429EF1BB800CDC449 /* Products */;
 			projectDirPath = "";
@@ -255,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				962EEE4229F13E4800CDC449 /* DetailViewController.swift in Sources */,
 				962EEE1B29EF1CD700CDC449 /* MainViewController.swift in Sources */,
 				962EEE3A29EFE44100CDC449 /* FeedCell.swift in Sources */,
 				962EEE2E29EFE0AC00CDC449 /* PokeName.swift in Sources */,
@@ -490,6 +502,22 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		962EEE3B29F13B4500CDC449 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		962EEE3E29F13B5A00CDC449 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSVGCoder.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -502,6 +530,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 962EEE2A29EFDDDC00CDC449 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		962EEE3C29F13B4500CDC449 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 962EEE3B29F13B4500CDC449 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		962EEE3F29F13B5A00CDC449 /* SDWebImageSVGCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 962EEE3E29F13B5A00CDC449 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */;
+			productName = SDWebImageSVGCoder;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

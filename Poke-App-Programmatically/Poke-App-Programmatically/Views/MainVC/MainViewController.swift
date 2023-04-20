@@ -10,50 +10,59 @@ import SnapKit
 
 let reuseIdentifier = "cell"
 
-class MainViewController: UIViewController {
-
-    lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .systemGray
-        return collectionView
-    }()
-
+class MainViewController: UICollectionViewController {
+    
+    //MARK: - Properties
+    
+    var model = ViewModel()
+    var pokeUrls = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        bindPokeName()
+    }
+    
+    func setupUI() {
+        // Collection View Setup
+        collectionView.isUserInteractionEnabled = true
+        collectionView.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-
-        view.backgroundColor = .white
-        view.addSubview(collectionView)
-
-        collectionView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.top.bottom.equalToSuperview()
+        title = "Poke Poke"
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .systemRed
+        //        navigationController?.navigationBar.backgroundColor = UIColor(red: 197/255, green: 226/255, blue: 228/255, alpha: 1)
+    }
+    
+    //MARK: - Get Data
+    
+    func bindPokeName() {
+        model.getPokeData()
+        self.model.pokeNamesData = {[weak self] value in
+            guard let self = self else {return}
+            if let value = value {
+                for i in 0...value.count - 1 {
+                    if let url = value[i].url {
+                        self.pokeUrls.append(url)
+                    }
+                }
+                self.collectionView.reloadData()
+            }
         }
     }
 }
 
-
-
 //MARK: - UICollectionView DataSource
 
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+extension MainViewController {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        pokeUrls.count
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FeedCell
-        cell.backgroundColor = .systemGray
+        cell.cellConfig(url: pokeUrls[indexPath.row])
         return cell
     }
-    
 }
 
 //MARK: - UICollectionView Delegate FlowLayout  -- where we define size of cell
@@ -68,7 +77,16 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10) // Sağ ve solda 10 piksellik boşluk bırakın
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
+//MARK: - MainViewController Extension
 
-
+extension MainViewController: GestureProtocol {
+    func turnTheImage() {
+    }
+}
