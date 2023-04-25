@@ -80,6 +80,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailViewController()
+        vc.pokeDetailUrl = self.pokeUrls[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
 }

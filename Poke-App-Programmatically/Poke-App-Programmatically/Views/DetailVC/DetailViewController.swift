@@ -12,7 +12,20 @@ import SDWebImageSVGCoder
 
 class DetailViewController: UIViewController {
     
+    //MARK: - Flip Animation Enums
+    
+    private enum Side {
+        case head
+        case tail
+    }
+    
     //MARK: - Properties
+    
+    var model = DetailViewModel()
+    var pokeDetailUrl = String()
+    var pokeDetail: PokeDetail?
+    var abilities = [String]()
+    private var currentSide: Side = .head
     
     private let detailType: UILabel = {
         var label = UILabel()
@@ -52,18 +65,21 @@ class DetailViewController: UIViewController {
     
     private let detailHpLabel: UILabel = {
         var label = UILabel()
+        label.text = "hp"
         label.detailLabel(size: 15, color: .systemRed, alpha: 0.7, textAlign: .left)
         return label
     }()
     
     private let detailAttackLabel: UILabel = {
         var label = UILabel()
+        label.text = "attack"
         label.detailLabel(size: 15, color: .systemRed, alpha: 0.7, textAlign: .left)
         return label
     }()
     
     private let detailDefLabel: UILabel = {
         var label = UILabel()
+        label.text = "defence"
         label.detailLabel(size: 15, color: .systemRed, alpha: 0.7, textAlign: .left)
         return label
     }()
@@ -91,12 +107,29 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
-        view.backgroundColor = .white
+        bind(url: pokeDetailUrl)
+    }
+    
+    
+    //MARK: - Get Data
+    
+    func bind(url: String) {
+            self.model.getPokeDetail(url: url)
+            self.model.pokeDetailData = {[weak self] value in
+                guard let self = self else {return}
+                self.pokeDetail = value
+                for ability in value.abilities {
+                    self.abilities.append((ability.ability?.name)!)
+                }
+                self.setupUI()
+            }
     }
     
     //MARK: - Config
     
     func configUI() {
+        view.backgroundColor = .systemBackground
+        
         view.addSubview(detailBackground)
         detailBackground.snp.makeConstraints { make in
             make.trailing.leading.equalToSuperview()
@@ -149,6 +182,23 @@ class DetailViewController: UIViewController {
         demoStack.snp.makeConstraints { make in
             make.leading.equalTo(detailBackground).offset(40)
             make.top.equalTo(detailBackground.snp.bottom).offset(-140)
+        }
+    }
+    
+    //MARK: - SetupUI
+    
+    func setupUI() {
+        detailName.text = pokeDetail?.name.uppercased()
+        detailAbilities.text = "Abilities: \n\(abilities.map { "• \($0)".capitalized }.joined(separator: "\n"))"
+        detailType.text = pokeDetail?.types?[0].type?.name?.capitalized
+        detailHp.text = String(pokeDetail?.stats?[0].baseStat ?? 0)
+        detailAttack.text = String(pokeDetail?.stats?[1].baseStat ?? 0)
+        detailDef.text = String(pokeDetail?.stats?[2].baseStat ?? 0)
+        
+        // Svg Image Download
+        SDImageCodersManager.shared.addCoder(SDImageSVGCoder.shared)
+        if let url = pokeDetail?.sprite.other?.dreamWorld?.frontDefault {
+            detailImage.sd_setImage(with: URL(string: url))
         }
     }
 
