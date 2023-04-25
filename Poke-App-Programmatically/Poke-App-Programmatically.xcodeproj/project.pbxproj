@@ -24,7 +24,21 @@
 		962EEE3D29F13B4500CDC449 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 962EEE3C29F13B4500CDC449 /* SDWebImage */; };
 		962EEE4029F13B5A00CDC449 /* SDWebImageSVGCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 962EEE3F29F13B5A00CDC449 /* SDWebImageSVGCoder */; };
 		962EEE4229F13E4800CDC449 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962EEE4129F13E4800CDC449 /* DetailViewController.swift */; };
+		969F093629F8001D00934463 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969F093529F8001D00934463 /* Extensions.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		964F3C1529F538E7009BFECF /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		962EEE0329EF1BB800CDC449 /* Poke-App-Programmatically.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Poke-App-Programmatically.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +56,7 @@
 		962EEE3729EFE24900CDC449 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		962EEE3929EFE44100CDC449 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		962EEE4129F13E4800CDC449 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		969F093529F8001D00934463 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +93,7 @@
 		962EEE0529EF1BB800CDC449 /* Poke-App-Programmatically */ = {
 			isa = PBXGroup;
 			children = (
+				969F093429F8000D00934463 /* Utils */,
 				962EEE2029EFDC8400CDC449 /* SupportingFiles */,
 				962EEE1F29EFDC7100CDC449 /* Scenes */,
 				962EEE2229EFDCD700CDC449 /* Network */,
@@ -184,6 +200,14 @@
 			path = DetialViewModel;
 			sourceTree = "<group>";
 		};
+		969F093429F8000D00934463 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				969F093529F8001D00934463 /* Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -194,6 +218,7 @@
 				962EEDFF29EF1BB800CDC449 /* Sources */,
 				962EEE0029EF1BB800CDC449 /* Frameworks */,
 				962EEE0129EF1BB800CDC449 /* Resources */,
+				964F3C1529F538E7009BFECF /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -273,6 +298,7 @@
 				962EEE2529EFDD0200CDC449 /* Service.swift in Sources */,
 				962EEE0729EF1BB800CDC449 /* AppDelegate.swift in Sources */,
 				962EEE3829EFE24900CDC449 /* DetailViewModel.swift in Sources */,
+				969F093629F8001D00934463 /* Extensions.swift in Sources */,
 				962EEE0929EF1BB800CDC449 /* SceneDelegate.swift in Sources */,
 				962EEE2729EFDD3100CDC449 /* ServiceManager.swift in Sources */,
 				962EEE3029EFE0C700CDC449 /* PokeDetail.swift in Sources */,

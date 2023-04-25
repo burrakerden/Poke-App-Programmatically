@@ -16,23 +16,13 @@ class DetailViewController: UIViewController {
     
     private let detailType: UILabel = {
         var label = UILabel()
-        label.text = "Fire"
-        label.textColor = .systemRed
-        label.alpha = 0.7
-        label.font = UIFont(name: "Chalkduster", size: 20)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        label.textAlignment = .center
+        label.detailLabel(size: 20, color: .systemRed, alpha: 0.7, textAlign: .center)
         return label
     }()
     
     private let detailName: UILabel = {
         var label = UILabel()
-        label.text = "CHARIZARD"
-        label.font = UIFont(name: "Chalkduster", size: 20)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        label.textAlignment = .center
+        label.detailLabel(size: 20, color: .label, textAlign: .center)
         return label
     }()
     
@@ -56,58 +46,43 @@ class DetailViewController: UIViewController {
     
     private let detailAbilities: UILabel = {
         var label = UILabel()
-        label.text = """
-                    CHARIZARD
-                    CHARIZARD
-                    CHARIZARD
-                    CHARIZARD
-                    """
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Chalkduster", size: 20)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        return label
-    }()
-    
-    private let detailHp: UILabel = {
-        var label = UILabel()
-        label.font = UIFont(name: "Chalkduster", size: 16)
-        label.textAlignment = .left
-        return label
-    }()
-    
-    private let detailAttack: UILabel = {
-        var label = UILabel()
-        label.font = UIFont(name: "Chalkduster", size: 16)
-        label.textAlignment = .left
-        return label
-    }()
-    
-    private let detailDef: UILabel = {
-        var label = UILabel()
-        label.font = UIFont(name: "Chalkduster", size: 16)
-        label.textAlignment = .left
+        label.detailLabel(size: 20, color: .label, alpha: 0.7, textAlign: .left, numberoFLines: 0)
         return label
     }()
     
     private let detailHpLabel: UILabel = {
         var label = UILabel()
-        label.font = UIFont(name: "Chalkduster", size: 14)
-        label.textAlignment = .left
+        label.detailLabel(size: 15, color: .systemRed, alpha: 0.7, textAlign: .left)
         return label
     }()
     
     private let detailAttackLabel: UILabel = {
         var label = UILabel()
-        label.font = UIFont(name: "Chalkduster", size: 14)
-        label.textAlignment = .left
+        label.detailLabel(size: 15, color: .systemRed, alpha: 0.7, textAlign: .left)
         return label
     }()
     
     private let detailDefLabel: UILabel = {
         var label = UILabel()
-        label.font = UIFont(name: "Chalkduster", size: 14)
-        label.textAlignment = .left
+        label.detailLabel(size: 15, color: .systemRed, alpha: 0.7, textAlign: .left)
+        return label
+    }()
+    
+    private let detailHp: UILabel = {
+        var label = UILabel()
+        label.detailLabel(size: 15, color: .systemGray, alpha: 0.7, textAlign: .left)
+        return label
+    }()
+    
+    private let detailAttack: UILabel = {
+        var label = UILabel()
+        label.detailLabel(size: 15, color: .systemGray, alpha: 0.7, textAlign: .left)
+        return label
+    }()
+    
+    private let detailDef: UILabel = {
+        var label = UILabel()
+        label.detailLabel(size: 15, color: .systemGray, alpha: 0.7, textAlign: .left)
         return label
     }()
 
@@ -118,6 +93,8 @@ class DetailViewController: UIViewController {
         configUI()
         view.backgroundColor = .white
     }
+    
+    //MARK: - Config
     
     func configUI() {
         view.addSubview(detailBackground)
@@ -154,6 +131,25 @@ class DetailViewController: UIViewController {
             make.leading.trailing.equalTo(detailBackground).inset(32)
         }
         
+        let labelsStackView = UIStackView(arrangedSubviews: [detailHpLabel, detailAttackLabel, detailDefLabel])
+        labelsStackView.distribution = .fillEqually
+        labelsStackView.axis = .vertical
+        labelsStackView.spacing = 20
+        
+        let statsStackView = UIStackView(arrangedSubviews: [detailHp, detailAttack, detailDef])
+        statsStackView.distribution = .fillEqually
+        statsStackView.axis = .vertical
+        statsStackView.spacing = 20
+        
+        let demoStack = UIStackView(arrangedSubviews: [labelsStackView, statsStackView])
+        demoStack.distribution = .fillEqually
+        demoStack.spacing = 32
+        
+        detailBackground.addSubview(demoStack)
+        demoStack.snp.makeConstraints { make in
+            make.leading.equalTo(detailBackground).offset(40)
+            make.top.equalTo(detailBackground.snp.bottom).offset(-140)
+        }
     }
 
 }
