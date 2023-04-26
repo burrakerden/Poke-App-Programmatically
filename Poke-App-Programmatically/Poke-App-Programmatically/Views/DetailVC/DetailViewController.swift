@@ -39,10 +39,20 @@ class DetailViewController: UIViewController {
         return label
     }()
     
-    private let detailBackground: UIImageView = {
+    private let detailPokeFront: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleToFill
         iv.image = UIImage(named: "front")
+        iv.clipsToBounds = true
+        iv.isUserInteractionEnabled = true
+        iv.isHidden = true
+        return iv
+    }()
+    
+    private let detailPokeBack: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleToFill
+        iv.image = UIImage(named: "back")
         iv.clipsToBounds = true
         iv.isUserInteractionEnabled = true
         return iv
@@ -108,6 +118,9 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         configUI()
         bind(url: pokeDetailUrl)
+        tapGesture()
+        hiddenUIElements(true)
+        
     }
     
     
@@ -128,40 +141,44 @@ class DetailViewController: UIViewController {
     //MARK: - Config
     
     func configUI() {
-        view.backgroundColor = .systemBackground
+//        view.backgroundColor = .systemBackground
         
-        view.addSubview(detailBackground)
-        detailBackground.snp.makeConstraints { make in
-            make.trailing.leading.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        view.addSubview(detailPokeFront)
+        detailPokeFront.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
+
         }
         
-        detailBackground.addSubview(detailName)
+        view.addSubview(detailPokeBack)
+        detailPokeBack.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
+        }
+        
+        detailPokeFront.addSubview(detailName)
         detailName.snp.makeConstraints { make in
-            make.top.equalTo(detailBackground).offset(36)
-            make.leading.equalTo(detailBackground).offset(96)
-            make.trailing.equalTo(detailBackground).offset(-132)
+            make.top.equalTo(detailPokeFront).offset(36)
+            make.leading.equalTo(detailPokeFront).offset(96)
+            make.trailing.equalTo(detailPokeFront).offset(-132)
         }
         
-        detailBackground.addSubview(detailType)
+        detailPokeFront.addSubview(detailType)
         detailType.snp.makeConstraints { make in
             make.centerY.equalTo(detailName)
             make.leading.equalTo(detailName.snp.trailing).offset(30)
-            make.trailing.equalTo(detailBackground).offset(-24)
+            make.trailing.equalTo(detailPokeFront).offset(-24)
         }
         
-        detailBackground.addSubview(detailImage)
+        detailPokeFront.addSubview(detailImage)
         detailImage.snp.makeConstraints { make in
-            make.top.equalTo(detailBackground).offset(76)
-            make.leading.trailing.equalTo(detailBackground).inset(36)
-            make.bottom.equalTo(detailBackground).offset(-368)
+            make.top.equalTo(detailPokeFront).offset(76)
+            make.leading.trailing.equalTo(detailPokeFront).inset(36)
+            make.bottom.equalTo(detailPokeFront).offset(-368)
         }
         
-        detailBackground.addSubview(detailAbilities)
+        detailPokeFront.addSubview(detailAbilities)
         detailAbilities.snp.makeConstraints { make in
             make.top.equalTo(detailImage.snp.bottom).offset(48)
-            make.leading.trailing.equalTo(detailBackground).inset(32)
+            make.leading.trailing.equalTo(detailPokeFront).inset(32)
         }
         
         let labelsStackView = UIStackView(arrangedSubviews: [detailHpLabel, detailAttackLabel, detailDefLabel])
@@ -178,10 +195,10 @@ class DetailViewController: UIViewController {
         demoStack.distribution = .fillEqually
         demoStack.spacing = 32
         
-        detailBackground.addSubview(demoStack)
+        detailPokeFront.addSubview(demoStack)
         demoStack.snp.makeConstraints { make in
-            make.leading.equalTo(detailBackground).offset(40)
-            make.top.equalTo(detailBackground.snp.bottom).offset(-140)
+            make.leading.equalTo(detailPokeFront).offset(40)
+            make.top.equalTo(detailPokeFront.snp.bottom).offset(-140)
         }
     }
     
@@ -199,6 +216,38 @@ class DetailViewController: UIViewController {
         SDImageCodersManager.shared.addCoder(SDImageSVGCoder.shared)
         if let url = pokeDetail?.sprite.other?.dreamWorld?.frontDefault {
             detailImage.sd_setImage(with: URL(string: url))
+        }
+    }
+    
+    func hiddenUIElements(_ status: Bool) {
+        [detailType, detailName, detailImage, detailAbilities, detailHp, detailAttack, detailDef, detailHpLabel, detailAttackLabel, detailDefLabel].forEach { $0.isHidden = status }
+    }
+    
+    // Tap Gesture for Flip Animation
+    func tapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapContainer))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    // Selector for Tap Gesture
+    @objc func tapContainer() {
+        switch currentSide {
+        case .head:
+            UIView.transition(from: detailPokeBack,
+                              to: detailPokeFront,
+                              duration: 1,
+                              options: [.transitionFlipFromRight, .showHideTransitionViews],
+                              completion: nil)
+            currentSide = .tail
+            hiddenUIElements(false)
+        case .tail:
+            UIView.transition(from: detailPokeFront,
+                              to: detailPokeBack,
+                              duration: 1,
+                              options: [.transitionFlipFromLeft, .showHideTransitionViews],
+                              completion: nil)
+            currentSide = .head
+            hiddenUIElements(true)
         }
     }
 
